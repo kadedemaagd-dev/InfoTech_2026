@@ -27,13 +27,7 @@ ellipsis = 0
 
 # Loop runs until x reaches 20 (boot animation length)
 while x != 20:
-    # Increment loop counter
     x += 1
-<<<<<<< HEAD
-    ellipsisMessage = ("InfoTechCenter OS Booting" + "." * ellipsis)
-    ellipsis += 1 
-    sys.stdout.write("\r\033[K" + ellipsisMessage)
-=======
 
     # Create the boot message with animated dots
     ellipsisMessage = (
@@ -43,26 +37,24 @@ while x != 20:
         + RESET
     )
 
-    # Increase dot count for the next frame
-    ellipsis += 1
-
     # Write message to the same console line
-    sys.stdout.write("\r" + ellipsisMessage + "   ")
->>>>>>> origin/Welcome
+    sys.stdout.write("\r\033[K" + ellipsisMessage)
     sys.stdout.flush()
 
+    # Increase dot count for next frame
+    ellipsis += 1
+
     # Pause to control animation speed
-    time.sleep(.5)
+    time.sleep(0.5)
 
     # Reset dots after reaching 3
     if ellipsis == 4:
         ellipsis = 0
 
-    # Display final success message once boot completes
-    if x == 20:
-        print(
-            GREEN
-            + BRIGHT
-            + "\nOperating System Booted Up - Retina Scanned - Access Granted"
-            + RESET
-        )
+# Display final success message once boot completes
+print(
+    GREEN
+    + BRIGHT
+    + "\nOperating System Booted Up - Retina Scanned - Access Granted"
+    + RESET
+)
