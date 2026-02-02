@@ -1,8 +1,12 @@
 import random
 from datetime import datetime, timedelta
 
-# Weather data:
-# speed limit (mph), alarm adjustment (minutes earlier)
+# -----------------------------
+# Weather data settings
+# Each weather type has:
+# - A safe driving speed limit
+# - How many minutes earlier the alarm should go off
+# -----------------------------
 weather_data = {
     "Sunny ☀️":        {"speed": 70, "alarm": 0},
     "Cloudy ☁️":      {"speed": 65, "alarm": 5},
@@ -13,19 +17,30 @@ weather_data = {
     "Hailstorm 🌨️":   {"speed": 25, "alarm": 35}
 }
 
-# Random weather
+# -----------------------------
+# Pick a random weather condition
+# -----------------------------
 weather = random.choice(list(weather_data.keys()))
+
+# Get safety values for that weather
 safe_speed = weather_data[weather]["speed"]
 alarm_early = weather_data[weather]["alarm"]
 
-# Original alarm time
+# -----------------------------
+# Alarm system logic
+# -----------------------------
+
+# Original alarm time (7:00 AM)
 original_alarm = datetime.strptime("07:00", "%H:%M")
+
+# Subtract minutes if bad weather
 new_alarm = original_alarm - timedelta(minutes=alarm_early)
 
-# Phone system
+# Phone system output
 print("📱 Smart Alarm System")
 print(f"🌦️ Weather forecast: {weather}")
 
+# If weather is bad, set alarm earlier
 if alarm_early > 0:
     print("⚠️ Extra travel time needed due to weather.")
     print(f"⏰ Alarm set earlier by {alarm_early} minutes.")
@@ -36,10 +51,13 @@ else:
 
 print("\n-----------------------------\n")
 
-# Car system
+# -----------------------------
+# Car safety system logic
+# -----------------------------
 print("🚗 Car Safety System Online")
 print(f"🌦️ Current conditions: {weather}")
 
+# If speed is low, conditions are unsafe
 if safe_speed < 60:
     print("⚠️ Unsafe driving conditions detected.")
     print(f"🔒 Speed limited to {safe_speed} mph.")
