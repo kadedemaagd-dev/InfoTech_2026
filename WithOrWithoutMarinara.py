@@ -1,4 +1,5 @@
 import random
+import time
 
 # ==============================
 # Gasoline Brach - Fake Phone App
@@ -9,12 +10,6 @@ print("Scanning for nearby gas stations...\n")
 
 # ------------------------------
 # Fake gas stations database
-# Each station has:
-# - name: station name
-# - distance: miles away
-# - price: gas price per gallon
-# - open: whether the station is open
-# - coke_slushie: if they have Coke Slushies
 # ------------------------------
 stations = [
     {"name": "Marathon", "distance": 0.8, "price": 3.45, "open": True,  "coke_slushie": True},
@@ -32,31 +27,27 @@ print(f"Gas Level: {gas}%\n")
 
 # ------------------------------
 # Fake range estimate
-# Assume full tank = 400 miles
 # ------------------------------
 miles_left = int((gas / 100) * 400)
 print(f"Estimated Range: {miles_left} miles\n")
 
 # ------------------------------
-# Find nearest gas station
+# Show distance to ALL stations
+# ------------------------------
+print("🗺️ Distances to Nearby Gas Stations:")
+for s in stations:
+    print(f"  {s['name']}: {s['distance']} miles away")
+
+# ------------------------------
+# Find nearest and cheapest
 # ------------------------------
 nearest = min(stations, key=lambda s: s["distance"])
-
-# ------------------------------
-# Find cheapest gas station
-# ------------------------------
 cheapest = min(stations, key=lambda s: s["price"])
 
-# ------------------------------
-# Display nearest station info
-# ------------------------------
-print("📍 Nearest Gas Station:")
+print("\n📍 Nearest Gas Station:")
 print(f"  {nearest['name']} - {nearest['distance']} miles away")
 print(f"  Status: {'OPEN' if nearest['open'] else 'CLOSED'}")
 
-# ------------------------------
-# Display cheapest station info
-# ------------------------------
 print("\n💲 Cheapest Gas Station:")
 print(f"  {cheapest['name']} - ${cheapest['price']:.2f} per gallon")
 print(f"  Status: {'OPEN' if cheapest['open'] else 'CLOSED'}")
@@ -64,24 +55,25 @@ print(f"  Status: {'OPEN' if cheapest['open'] else 'CLOSED'}")
 # ------------------------------
 # Gas alarm logic
 # ------------------------------
+low_gas = False
+
 if gas <= 25:
+    low_gas = True
     print("\n🔔 GAS ALARM: Fuel is low!")
 
-    # Check if you can reach nearest station
     if miles_left < nearest["distance"]:
         print("⚠️ WARNING: You may NOT have enough fuel to reach the nearest station!")
     else:
         print("✅ You should be able to reach the nearest station.")
 
 # ------------------------------
-# Fake AI Suggestions section
+# Fake AI Suggestions
 # ------------------------------
 print("\n🤖 AI Suggestions:")
 
 if gas <= 10:
     print("- Fuel critically low. Stop at the NEAREST open station immediately.")
 elif gas <= 25:
-    # Decide between cheapest and nearest
     if cheapest["open"] and miles_left >= cheapest["distance"]:
         print("- Consider driving to the cheapest station to save money.")
     else:
@@ -90,8 +82,23 @@ else:
     print("- Fuel level is healthy. You can wait for a better price if desired.")
 
 # ------------------------------
-# Ask user if they want to check
-# for Coke Slushies
+# FAKE Wake-Up Alarm Feature
+# ------------------------------
+if low_gas:
+    print("\n⏰ WAKE-UP ALARM SET!")
+    print("Because gas is low, an earlier wake-up alarm is scheduled.")
+    print("Alarm time moved earlier to remind you to get gas.")
+
+    # Simulate alarm going off (fake)
+    print("\n⏰ ALARM RINGING EARLY!")
+    for i in range(3):
+        print("🔊 BEEP! WAKE UP! GET GAS!")
+        time.sleep(1)
+else:
+    print("\n⏰ No early alarm needed. Gas level is okay.")
+
+# ------------------------------
+# Coke Slushie check
 # ------------------------------
 answer = input("\nDo you want to check for Coke Slushies? (yes/no): ").strip().lower()
 
@@ -106,7 +113,4 @@ if answer == "yes":
 else:
     print("\nSlushie check skipped.")
 
-# ------------------------------
-# End of program
-# ------------------------------
 print("\nDone.")
