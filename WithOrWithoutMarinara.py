@@ -29,6 +29,13 @@ ellipsis = 0
 while x != 20:
     x += 1
 
+
+    ellipsisMessage = ("InfoTechCenter OS Booting" + "." * ellipsis)
+    ellipsis += 1 
+    sys.stdout.write("\r\033[K" + ellipsisMessage)
+
+
+
     # Create the boot message with animated dots
     ellipsisMessage = (
         YELLOW
@@ -38,7 +45,12 @@ while x != 20:
     )
 
     # Write message to the same console line
+
     sys.stdout.write("\r\033[K" + ellipsisMessage)
+
+    sys.stdout.write("\r" + ellipsisMessage + "   ")
+
+
     sys.stdout.flush()
 
     # Increase dot count for next frame
